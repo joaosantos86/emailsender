@@ -6,7 +6,7 @@ type Contact struct {
 	Email string
 }
 
-type Campaing struct {
+type Campaign struct {
 	ID        string
 	Name      string
 	CreatedOn time.Time
@@ -14,7 +14,7 @@ type Campaing struct {
 	Contacts  []Contact
 }
 
-func NewCampaing(name string, content string, emails []string) *Campaing {
+func NewCampaign(name string, content string, emails []string) *Campaign {
 
 	contacts := make([]Contact, len(emails))
 	for _, email := range emails {
@@ -22,7 +22,7 @@ func NewCampaing(name string, content string, emails []string) *Campaing {
 	}
 
 
-	return &Campaing {
+	return &Campaign {
 		ID: "1",
 		Name: name,
 		Content: content,
