@@ -1,32 +1,35 @@
 package campaign
 
-import "time"
+import (
+	"time"
+
+	"github.com/rs/xid"
+)
 
 type Contact struct {
 	Email string
 }
 
-type Campaing struct {
+type Campaign struct {
 	ID        string
 	Name      string
-	CreatedOn time.Time
 	Content   string
 	Contacts  []Contact
+	CreatedOn time.Time
 }
 
-func NewCampaing(name string, content string, emails []string) *Campaing {
+func NewCampaign(name string, content string, emails []string) *Campaign {
 
-	contacts := make([]Contact, len(emails))
+	contacts := make([]Contact, 0, len(emails))
 	for _, email := range emails {
 		contacts = append(contacts, Contact{Email: email})
 	}
 
-
-	return &Campaing {
-		ID: "1",
-		Name: name,
-		Content: content,
+	return &Campaign{
+		ID:        xid.New().String(),
+		Name:      name,
+		Content:   content,
 		CreatedOn: time.Now(),
-		Contacts: contacts,
+		Contacts:  contacts,
 	}
 }
