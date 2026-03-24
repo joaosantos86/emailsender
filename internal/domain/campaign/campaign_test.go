@@ -8,8 +8,10 @@ import (
 )
 
 func newCampaign(t *testing.T) *Campaign {
+
 	t.Helper()
-	return NewCampaign("Campaign X", "body", []string{"email1@gmail.com", "email2@gmail.com"})
+	campaign, _ := NewCampaign("Campaign X", "body", []string{"email1@gmail.com", "email2@gmail.com"})
+	return campaign
 }
 
 func TestNewCampaign(t *testing.T) {
@@ -36,3 +38,24 @@ func TestNewCampaign_CreatedOnMusBeNow(t *testing.T) {
 	assert.Greater(campaign.CreatedOn, now)
 	// assert.NotZero(campaign.CreatedOn)
 }
+
+func TestNewCampaign_MustValidateName(t *testing.T) {
+	assert := assert.New(t)
+	_, err := NewCampaign("", "body", []string{"email1@gmail.com"})
+
+	assert.Equal("Name is Required", err.Error())
+}
+
+ func TestNewCampaign_MustValidateContent(t *testing.T) {
+ 	assert := assert.New(t)
+ 	_, err := NewCampaign("Campaign X", "", []string{"email1@gmail.com"})
+
+ 	assert.Equal("Content is Required", err.Error())
+ }
+
+ func TestNewCampaign_MustValidateContacts(t *testing.T) {
+ 	assert := assert.New(t)
+ 	_, err := NewCampaign("Campaign X", "body", []string{})
+
+ 	assert.Equal("Emails is Required", err.Error())
+ }
